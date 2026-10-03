@@ -1,4 +1,8 @@
 package com.gabryell.gym_system.repository;
 
-public interface ProfessorRepository {
+import com.gabryell.gym_system.model.Professor;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProfessorRepository extends JpaRepository <Professor, Long> {
+
 }
