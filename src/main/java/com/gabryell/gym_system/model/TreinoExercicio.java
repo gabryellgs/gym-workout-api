@@ -2,10 +2,13 @@ package com.gabryell.gym_system.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -19,16 +22,25 @@ public class TreinoExercicio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Min(value = 1, message = "Deve haver pelo menos uma série!")
+    @Column(nullable = false)
     private Integer series;
+
+    @Min(value = 1, message = "Deve haver pelo menos uma repetição")
+    @Column(nullable = false)
     private Integer repeticoes;
-    private Integer carga;
+
+    @Column(precision = 7, scale = 2)
+    private BigDecimal carga;
+    @Min(value = 0, message = "O descanso não pode ser negativo!")
+    @Column(nullable = false)
     private Integer descanso;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "treino_id")
     private Treino treino;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "exercicio_id")
     private Exercicio exercicio;
 
