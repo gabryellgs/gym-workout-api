@@ -42,6 +42,20 @@ public class AlunoService {
         return paraResponseDTO(alunoSalvo);
 
      }
+
+     public AlunoResponseDTO atualizar(
+             Long id,
+             AlunoRequestDTO dto) {
+        Aluno aluno = buscarEntidadePorId(id);
+        aluno.setNome(dto.nome());
+        aluno.setEmail(dto.email());
+        aluno.setTelefone(dto.telefone());
+
+         Aluno alunoAtualizado = alunoRepository.save(aluno);
+
+         return paraResponseDTO(alunoAtualizado);
+     }
+
      public void deletar(Long id){
         Aluno aluno = buscarEntidadePorId(id);
         alunoRepository.delete(aluno);

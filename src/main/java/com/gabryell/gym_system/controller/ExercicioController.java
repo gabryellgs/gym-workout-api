@@ -1,7 +1,9 @@
 package com.gabryell.gym_system.controller;
 
-import com.gabryell.gym_system.model.Exercicio;
+import com.gabryell.gym_system.dto.request.ExercicioRequestDTO;
+import com.gabryell.gym_system.dto.response.ExercicioResponseDTO;
 import com.gabryell.gym_system.service.ExercicioService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,25 +18,30 @@ public class ExercicioController {
         this.exercicioService = exercicioService;
     }
 
-    // GET para listar todos
     @GetMapping
-    public List<Exercicio> listarTodos(){
+    public List<ExercicioResponseDTO> listarTodos() {
         return exercicioService.listarTodos();
     }
 
-    // GET para buscar o exercicio por ID
     @GetMapping("/{id}")
-    public Exercicio buscaPorId(@PathVariable Long id){
+    public ExercicioResponseDTO buscaPorId(@PathVariable Long id) {
         return exercicioService.buscarPorId(id);
     }
 
-    // POST para cadastrar um novo exercício
     @PostMapping
-    public Exercicio salvar(@RequestBody Exercicio exercicio) {
-        return exercicioService.salvar(exercicio);
+    public ExercicioResponseDTO salvar(
+            @Valid @RequestBody ExercicioRequestDTO dto) {
+        return exercicioService.salvar(dto);
     }
 
-    // DELETE para deletar um exercício por ID
+    @PutMapping("/{id}")
+    public ExercicioResponseDTO atualizar(
+            @PathVariable Long id,
+            @Valid @RequestBody ExercicioRequestDTO dto) {
+
+        return exercicioService.atualizar(id, dto);
+    }
+
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
         exercicioService.deletar(id);

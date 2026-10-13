@@ -1,7 +1,9 @@
 package com.gabryell.gym_system.controller;
 
-import com.gabryell.gym_system.model.Treino;
+import com.gabryell.gym_system.dto.request.TreinoRequestDTO;
+import com.gabryell.gym_system.dto.response.TreinoResponseDTO;
 import com.gabryell.gym_system.service.TreinoService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,18 +19,18 @@ public class TreinoController {
     }
 
     @GetMapping
-    public List<Treino> listarTodos(){
+    public List<TreinoResponseDTO> listarTodos(){
         return treinoService.listarTodos();
     }
 
     @GetMapping("/{id}")
-    public Treino listarPorId(@PathVariable Long id){
+    public TreinoResponseDTO listarPorId(@PathVariable Long id){
         return treinoService.buscarPorId(id);
     }
 
     @PostMapping
-    public Treino salvar(@RequestBody Treino treino){
-        return treinoService.salvar(treino);
+    public TreinoResponseDTO salvar(@Valid @RequestBody TreinoRequestDTO dto){
+        return treinoService.salvar(dto);
     }
 
     @DeleteMapping("/{id}")
